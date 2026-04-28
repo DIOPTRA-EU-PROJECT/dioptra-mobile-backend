@@ -1,0 +1,97 @@
+# ================================================
+# DIOPTRA Mobile App Backend
+# Docker Compose Example Configuration
+# ================================================
+# 1. Copy this file to docker-compose.yml
+# 2. Create a .env file with the required variables:
+#
+#   ConnectionStrings__DefaultConnection=server=db;port=3306;Database=dioptrabackend;User=root;Password=<password>;
+#   MARIADB_ROOT_PASSWORD=<password>
+#   CLIENT_SECRET=<keycloak-client-secret>
+#
+# 3. Place your Firebase service account key at ./serviceAccountKey.json
+# 4. Run: docker compose up -d
+# ================================================
+
+services:
+
+  # -----------------------------------------------
+  # API - ASP.NET Core Web API
+  # -----------------------------------------------
+  api:
+    image: ghcr.io/dioptra-eu-project/dioptra-app-backend:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "127.0.0.1:8181:8080"
+    volumes:
+      - ./uploads/images:/app/uploads/images
+      - ./serviceAccountKey.json:/app/serviceAccountKey.json:ro
+    environment:
+      - ConnectionStrings__DefaultConnection=${ConnectionStrings__DefaultConnection}
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Auth__KeycloakEndpoint=${Auth__KeycloakEndpoint}
+      - Auth__Authority=${Auth__Authority}
+      - Auth__ClientId=${Auth__ClientId}
+      - DashboardSettings__BaseUrl=${DashboardSettings__BaseUrl}
+      - RiskAssessmentSettings__BaseUrl=${RiskAssessmentSettings__BaseUrl}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - PushNotifications__Enabled=true
+      - PushNotifications__FirebaseCredentialPath=/app/serviceAccountKey.json
+
+  # -----------------------------------------------
+  # CMS - Blazor WebAssembly Content Management
+  # -----------------------------------------------
+  cms:
+    image: ghcr.io/dioptra-eu-project/dioptra-app-cms:latest
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:8180:80"
+
+  # -----------------------------------------------
+  # Database - MariaDB
+  # -----------------------------------------------
+  db:
+    image: mariadb:lts-noble
+    restart: unless-stopped
+    volumes:
+      - mariadb:/var/lib/mysql
+      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=dioptrabackend
+
+  # -----------------------------------------------
+  # Database Backup
+  # -----------------------------------------------
+  mariadb-backup:
+    image: tiredofit/db-backup:latest
+    depends_on:
+      - db
+    environment:
+      - DB01_TYPE=mysql
+      - DB01_HOST=db
+      - DB01_NAME=dioptrabackend
+      - DB01_USER=root
+      - DB_PASS=${MARIADB_ROOT_PASSWORD}
+      - DB01_BACKUP_BEGIN=0600
+      - DB01_CLEANUP_TIME=262800
+    volumes:
+      - ./backups:/backup
+
+# -----------------------------------------------
+# Networks
+# -----------------------------------------------
+networks:
+  default:
+    name: mobile_default
+    external: true
+
+# -----------------------------------------------
+# Volumes
+# -----------------------------------------------
+volumes:
+  mariadb:
