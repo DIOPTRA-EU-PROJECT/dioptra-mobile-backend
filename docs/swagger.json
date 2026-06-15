@@ -390,6 +390,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "dioptraId",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "group",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -659,6 +675,58 @@
         }
       }
     },
+    "/api/Articles/{id}/tags": {
+      "put": {
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Articles/{articleId}/pilot/{pilot}": {
       "delete": {
         "tags": [
@@ -750,6 +818,149 @@
         }
       }
     },
+    "/api/Auth/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/DeviceTokens": {
+      "post": {
+        "tags": [
+          "DeviceTokens"
+        ],
+        "parameters": [
+          {
+            "name": "dioptraId",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDeviceTokenDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDeviceTokenDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDeviceTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DeviceTokens"
+        ],
+        "parameters": [
+          {
+            "name": "dioptraId",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DeviceTokens/all": {
+      "delete": {
+        "tags": [
+          "DeviceTokens"
+        ],
+        "parameters": [
+          {
+            "name": "dioptraId",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Images/{filename}": {
       "get": {
         "tags": [
@@ -801,6 +1012,171 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Notifications/RegisterDevice": {
+      "post": {
+        "tags": [
+          "Notifications"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDeviceTokenDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDeviceTokenDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDeviceTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PushNotifications": {
+      "post": {
+        "tags": [
+          "PushNotifications"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendPushNotificationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendPushNotificationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendPushNotificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "PushNotifications"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PushNotificationStatusDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PushNotifications/{id}": {
+      "get": {
+        "tags": [
+          "PushNotifications"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PushNotificationStatusDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PushNotifications/TriggerDiaryCheck": {
+      "post": {
+        "tags": [
+          "PushNotifications"
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -1020,6 +1396,138 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/QuestionnaireSubmissionResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quis/status": {
+      "get": {
+        "tags": [
+          "Quis"
+        ],
+        "parameters": [
+          {
+            "name": "dioptraId",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuisStatusDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quis": {
+      "post": {
+        "tags": [
+          "Quis"
+        ],
+        "parameters": [
+          {
+            "name": "dioptraId",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitQuisDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitQuisDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitQuisDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quis/export": {
+      "get": {
+        "tags": [
+          "Quis"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuisExportRowDto"
+                  }
                 }
               }
             }
@@ -2152,6 +2660,44 @@
         }
       }
     },
+    "/api/Tags": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Users": {
       "get": {
         "tags": [
@@ -2435,6 +2981,13 @@
               "$ref": "#/components/schemas/ArticleTranslation"
             },
             "nullable": true
+          },
+          "articleTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArticleTag"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2475,6 +3028,30 @@
               "$ref": "#/components/schemas/NestedArticleTranslationDto"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ArticleTag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "articleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          },
+          "tagId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tag": {
+            "$ref": "#/components/schemas/Tag"
           }
         },
         "additionalProperties": false
@@ -2526,6 +3103,17 @@
           "content": {
             "type": "string",
             "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "commonTagCount": {
+            "type": "integer",
+            "format": "int32"
           },
           "article": {
             "$ref": "#/components/schemas/NestedArticleDto"
@@ -2722,11 +3310,14 @@
         "additionalProperties": false
       },
       "PostQuestionnaireResponseDto": {
+        "required": [
+          "dioptraId"
+        ],
         "type": "object",
         "properties": {
           "dioptraId": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "clinicalSite": {
             "type": "string",
@@ -2980,6 +3571,85 @@
         "type": "object",
         "properties": {
           "dioptraId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "PushNotificationStatusDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "eventType": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalTargets": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "successCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failureCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageUrl": {
             "type": "string",
             "nullable": true
           }
@@ -3268,6 +3938,105 @@
         },
         "additionalProperties": false
       },
+      "QuisExportRowDto": {
+        "type": "object",
+        "properties": {
+          "participantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "wave": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "q1": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q2": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q3": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q4": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q5": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q6": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q7": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q8": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q9": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q10": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q11": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q12": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q13": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q14": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "q15": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuisStatusDto": {
+        "type": "object",
+        "properties": {
+          "canSubmit": {
+            "type": "boolean"
+          },
+          "currentWave": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "alreadySubmitted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "Recommendation": {
         "type": "object",
         "properties": {
@@ -3309,6 +4078,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RecommendationTranslation"
+            },
+            "nullable": true
+          },
+          "recommendationTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecommendationTag"
             },
             "nullable": true
           }
@@ -3358,6 +4134,30 @@
               "$ref": "#/components/schemas/NestedRecommendationTranslationDto"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecommendationTag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recommendationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recommendation": {
+            "$ref": "#/components/schemas/Recommendation"
+          },
+          "tagId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tag": {
+            "$ref": "#/components/schemas/Tag"
           }
         },
         "additionalProperties": false
@@ -3451,6 +4251,30 @@
         },
         "additionalProperties": false
       },
+      "RegisterDeviceTokenDto": {
+        "required": [
+          "dioptraId",
+          "platform",
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "platform": {
+            "minLength": 1,
+            "pattern": "android|ios|web",
+            "type": "string"
+          },
+          "dioptraId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "RetryRiskAssessmentDto": {
         "type": "object",
         "properties": {
@@ -3538,6 +4362,51 @@
         },
         "additionalProperties": false
       },
+      "SendPushNotificationDto": {
+        "required": [
+          "body",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "body": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "dataJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetType": {
+            "type": "string",
+            "nullable": true
+          },
+          "dioptraIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "imageUrl": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ServiceHealthStatus": {
         "type": "object",
         "properties": {
@@ -3589,6 +4458,130 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "SubmitQuisDto": {
+        "required": [
+          "q1",
+          "q10",
+          "q11",
+          "q12",
+          "q13",
+          "q14",
+          "q15",
+          "q2",
+          "q3",
+          "q4",
+          "q5",
+          "q6",
+          "q7",
+          "q8",
+          "q9",
+          "wave"
+        ],
+        "type": "object",
+        "properties": {
+          "wave": {
+            "maximum": 2,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "q1": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q2": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q3": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q4": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q5": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q6": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q7": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q8": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q9": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q10": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q11": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q12": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q13": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q14": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "q15": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
       },
       "SyncAllResultDto": {
         "type": "object",
@@ -3688,6 +4681,38 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "articleTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArticleTag"
+            },
+            "nullable": true
+          },
+          "recommendationTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecommendationTag"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "User": {
         "type": "object",
