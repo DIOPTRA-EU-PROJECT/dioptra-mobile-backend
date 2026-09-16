@@ -1019,6 +1019,47 @@
         }
       }
     },
+    "/api/Metrics/study": {
+      "get": {
+        "tags": [
+          "Metrics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyMetricsDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Metrics/export": {
+      "get": {
+        "tags": [
+          "Metrics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserMetricsExportRowDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Notifications/RegisterDevice": {
       "post": {
         "tags": [
@@ -4459,6 +4500,24 @@
         "type": "integer",
         "format": "int32"
       },
+      "StudyMetricsDto": {
+        "type": "object",
+        "properties": {
+          "mobileAppAccessCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diaryQuestionnaireResponseCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quisResponseCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "SubmitQuisDto": {
         "required": [
           "q1",
@@ -4732,6 +4791,46 @@
           },
           "dioptraId": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMetricsExportRowDto": {
+        "type": "object",
+        "properties": {
+          "dioptraId": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstLoginAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "questionnaireResponseCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diaryResponseCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mostRecentQuestionnaireResponseAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "quisResponseCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quisWavesSubmitted": {
+            "type": "string",
+            "nullable": true
+          },
+          "mostRecentQuisResponseAt": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
