@@ -1540,9 +1540,40 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Quis/trigger": {
+      "post": {
+        "tags": [
+          "Quis"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerQuisDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerQuisDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerQuisDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
           },
-          "409": {
-            "description": "Conflict",
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -3986,10 +4017,6 @@
             "type": "string",
             "nullable": true
           },
-          "wave": {
-            "type": "integer",
-            "format": "int32"
-          },
           "gender": {
             "type": "string",
             "nullable": true
@@ -4067,13 +4094,10 @@
           "canSubmit": {
             "type": "boolean"
           },
-          "currentWave": {
-            "type": "integer",
-            "format": "int32",
+          "requiredSince": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
-          },
-          "alreadySubmitted": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -4534,17 +4558,10 @@
           "q6",
           "q7",
           "q8",
-          "q9",
-          "wave"
+          "q9"
         ],
         "type": "object",
         "properties": {
-          "wave": {
-            "maximum": 2,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
           "gender": {
             "type": "string",
             "nullable": true
@@ -4773,6 +4790,26 @@
         },
         "additionalProperties": false
       },
+      "TriggerQuisDto": {
+        "required": [
+          "requiredSince"
+        ],
+        "type": "object",
+        "properties": {
+          "requiredSince": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dioptraIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -4823,10 +4860,6 @@
           "quisResponseCount": {
             "type": "integer",
             "format": "int32"
-          },
-          "quisWavesSubmitted": {
-            "type": "string",
-            "nullable": true
           },
           "mostRecentQuisResponseAt": {
             "type": "string",
