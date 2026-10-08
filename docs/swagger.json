@@ -961,6 +961,47 @@
         }
       }
     },
+    "/api/Diary/trigger": {
+      "post": {
+        "tags": [
+          "Diary"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerDiaryDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerDiaryDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerDiaryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Images/{filename}": {
       "get": {
         "tags": [
@@ -4784,6 +4825,26 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RecommendationTag"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TriggerDiaryDto": {
+        "required": [
+          "requiredSince"
+        ],
+        "type": "object",
+        "properties": {
+          "requiredSince": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dioptraIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
             "nullable": true
           }
