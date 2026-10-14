@@ -1002,6 +1002,47 @@
         }
       }
     },
+    "/api/FullQuestionnaire/trigger": {
+      "post": {
+        "tags": [
+          "FullQuestionnaire"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerFullQuestionnaireDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerFullQuestionnaireDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriggerFullQuestionnaireDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Images/{filename}": {
       "get": {
         "tags": [
@@ -3263,6 +3304,50 @@
         },
         "additionalProperties": false
       },
+      "DateOnly": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "dayOfYear": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "dayNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DayOfWeek": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "DietDto": {
         "type": "object",
         "properties": {
@@ -4841,6 +4926,38 @@
             "type": "string",
             "format": "date-time"
           },
+          "startsOn": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
+          "endsOn": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
+          "dioptraIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TriggerFullQuestionnaireDto": {
+        "required": [
+          "requiredSince"
+        ],
+        "type": "object",
+        "properties": {
+          "requiredSince": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startsOn": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
+          "endsOn": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
           "dioptraIds": {
             "type": "array",
             "items": {
@@ -4860,6 +4977,12 @@
           "requiredSince": {
             "type": "string",
             "format": "date-time"
+          },
+          "startsOn": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
+          "endsOn": {
+            "$ref": "#/components/schemas/DateOnly"
           },
           "dioptraIds": {
             "type": "array",
